@@ -1,8 +1,9 @@
+import numpy as np
 A = {'a':1,'b':0.9,'c':0.85}
 B = {'a':0.9,'b':0.7,'c':0.6}
 C = dict()
-X = [[0,1,1],[1,0,0],[0,0,0]]
-Y = [[1,0,1],[1,0,1],[0,1,1]]
+X = np.array([[0.5, 0.1],[0.2, 0.9],[0.8,0.6]])
+Y = np.array([[0.6,0.4,0.7],[0.5,0.8,0.9]])
 _A = {}
 _B = {}
 def Union(A,B):
@@ -58,16 +59,26 @@ def Cartesian(A,B,f=1):
 
 def Composition(X,Y):
     import numpy as np
+    C = np.zeros(X.shape[0]*Y.shape[1]).reshape(X.shape[0], Y.shape[1])
+    l = list()
+    for i in range(0, X.shape[0]):
+        for j in range(0, Y.shape[1]):
+            for k in range(0, Y.shape[0]):
+                l.append(min(X[i][k], Y[k][j]))
+            C[i][j] = max(l)
+            l = []
+    print('max-min Composition: ', C)
+    '''import numpy as np
     C = np.array([[0,1,1],[1,0,0],[0,0,0]])
     l = []
     for i in range(3):
-        for j in range(3):
-            l.append(min(X[i][j], Y[j][i]))
+        for j in range(2):
+            l.append(float(min(float(X[i][j]), float(Y[j][i]))))
 
-        C[i][j] = max(l)
-        l = l.clear()
+        C[i][j] = float(max(l))
+        l = []
     print('max-min Composition: ', C)
-
+'''
 Union(A,B)
 Intersection(A,B)
 Complement(A)
@@ -75,4 +86,3 @@ Complement(B)
 Difference(A,B)
 Cartesian(A,B)
 Composition(X,Y)
-
