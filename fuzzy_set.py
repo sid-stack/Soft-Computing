@@ -1,6 +1,8 @@
 A = {'a':1,'b':0.9,'c':0.85}
 B = {'a':0.9,'b':0.7,'c':0.6}
 C = dict()
+X = [[0,1,1],[1,0,0],[0,0,0]]
+Y = [[1,0,1],[1,0,1],[0,1,1]]
 _A = {}
 _B = {}
 def Union(A,B):
@@ -54,21 +56,23 @@ def Cartesian(A,B,f=1):
         return C
     print('Cartesian Product: \n',C)
 
-def Composition(A,B,C):
-    for key_1 in A:
-        l = []
-        res = []
-        for key_2 in B:
-            for key_3 in C:
-                l.append(max(min(A[key_1],B[key_2]), C[key_3]))
-            res.append(max(l))
-        print(res)
+def Composition(X,Y):
+    import numpy as np
+    C = np.array([[0,1,1],[1,0,0],[0,0,0]])
+    l = []
+    for i in range(3):
+        for j in range(3):
+            l.append(min(X[i][j], Y[j][i]))
 
-C = {'a':0.5,'b':0.5,'c':0.5}
+        C[i][j] = max(l)
+        l = l.clear()
+    print('max-min Composition: ', C)
+
 Union(A,B)
 Intersection(A,B)
 Complement(A)
 Complement(B)
 Difference(A,B)
 Cartesian(A,B)
-Composition(A,B,C)
+Composition(X,Y)
+
